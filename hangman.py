@@ -20,7 +20,7 @@ def draw_text(text, x, y, font):
     window.blit(text_pic, text_rect)
 
 def random_word():
-    words = ['cat', 'mouse', 'root', 'pterodactyl', 'river', 'string', 'spring', 'wine', 'aardvack', 'bean', 'dinosaur', 'kelp', 'sword', 'mathematics', 'ruler', 'glasses', 'imagination']
+    words = ['cat', 'mouse', 'root', 'pterodactyl', 'river', 'string', 'spring', 'wine', 'aardvack', 'bean', 'dinosaur', 'kelp', 'sword', 'mathematics', 'ruler', 'glasses', 'imagination', 'fantasy', 'magic', 'flower', 'tree', 'jazz', 'pinetree', 'laughter', 'emu', 'bass', 'christmas', 'well', 'game', 'diamond']
     guessed_word = choice(words).strip()
     return guessed_word
 
@@ -86,7 +86,7 @@ wrong_guesses = []
 run = True
 finish = False
 word = 'cat'
-
+flag = False
 games = 0
 wins = 0
 
@@ -102,8 +102,10 @@ while run:
                 word = None
                 reset()
             if e.key in range(K_a, K_z + 1) and not finish and hangman_status < 10:
+                flag = False
                 if e.unicode in guesses or e.unicode in wrong_guesses:
-                    draw_text('Вы уже угадывали эту букву', 400+(450/2), 120, font2)
+                    flag = True
+                    
                 elif e.unicode in word:
                     guesses += e.unicode
                     print(e.unicode)
@@ -111,6 +113,7 @@ while run:
                     wrong_guesses += e.unicode
                     print(wrong_guesses)
                     hangman_status += 1
-
+    if flag:
+        draw_text('Вы уже угадывали эту букву', 400+(450/2), 120, font2)
     display.update()
     time.delay(60)
